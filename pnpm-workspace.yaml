@@ -58,11 +58,13 @@ catalog:
 
 autoInstallPeers: false
 
-onlyBuiltDependencies:
-  - "@swc/core"
-  - esbuild
-  - msw
-  - unrs-resolver
+# pnpm v10+ only runs dependency build scripts that are explicitly trusted.
+# Keep this list narrow: these packages require install-time binaries/codegen.
+allowBuilds:
+  "@swc/core": true
+  esbuild: true
+  msw: true
+  unrs-resolver: true
 
 overrides:
   # drizzle-kit uses esbuild internally on an older version that's vulnerable, this overrides it
