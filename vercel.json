@@ -3,7 +3,7 @@
   "framework": "vite",
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "pnpm --filter @workspace/poker-at-berkeley run build",
-  "outputDirectory": "artifacts/poker-at-berkeley/dist/public",
+  "outputDirectory": "artifacts/poker-at-berkeley/public",
   "rewrites": [
     {
       "source": "/(.*)",

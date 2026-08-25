@@ -18,8 +18,10 @@ export default defineConfig({
     dedupe: ["react", "react-dom"],
   },
   root: path.resolve(import.meta.dirname),
+  publicDir: path.resolve(import.meta.dirname, "static"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    // Vercel is configured to serve this directory directly.
+    outDir: path.resolve(import.meta.dirname, "public"),
     emptyOutDir: true,
   },
   server: {

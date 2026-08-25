@@ -1,5 +1,6 @@
 node_modules/
 artifacts/*/dist/
+artifacts/poker-at-berkeley/public/
 .vercel/
 .env
 .env.*
