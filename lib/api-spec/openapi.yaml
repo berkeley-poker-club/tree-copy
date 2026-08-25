@@ -1,0 +1,218 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: events
+    description: Club events operations
+  - name: instagram
+    description: Instagram post management
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /events:
+    get:
+      operationId: listEvents
+      tags: [events]
+      summary: List all events
+      description: Returns all events sorted by date ascending
+      responses:
+        "200":
+          description: List of events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Event"
+    post:
+      operationId: createEvent
+      tags: [events]
+      summary: Create a new event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEventBody"
+      responses:
+        "201":
+          description: Created event
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+        "400":
+          description: Invalid input
+  /events/{id}:
+    delete:
+      operationId: deleteEvent
+      tags: [events]
+      summary: Delete an event
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Event deleted
+        "404":
+          description: Event not found
+  /instagram-posts:
+    get:
+      operationId: listInstagramPosts
+      tags: [instagram]
+      summary: List featured Instagram posts
+      responses:
+        "200":
+          description: List of posts in display order
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstagramPost"
+    post:
+      operationId: createInstagramPost
+      tags: [instagram]
+      summary: Add an Instagram post to the feed
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateInstagramPostBody"
+      responses:
+        "201":
+          description: Created post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstagramPost"
+        "400":
+          description: Invalid input
+  /instagram-posts/{id}:
+    delete:
+      operationId: deleteInstagramPost
+      tags: [instagram]
+      summary: Remove an Instagram post from the feed
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        eventDate:
+          type: string
+          description: ISO date string YYYY-MM-DD
+        eventTime:
+          type: string
+          description: Human-readable time e.g. "7:00 PM – Midnight"
+        location:
+          type: string
+        description:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+      required:
+        - id
+        - title
+        - eventDate
+        - eventTime
+        - location
+        - description
+        - createdAt
+    CreateEventBody:
+      type: object
+      properties:
+        title:
+          type: string
+        eventDate:
+          type: string
+          description: ISO date string YYYY-MM-DD
+        eventTime:
+          type: string
+        location:
+          type: string
+        description:
+          type: ["string", "null"]
+      required:
+        - title
+        - eventDate
+        - eventTime
+        - location
+    InstagramPost:
+      type: object
+      properties:
+        id:
+          type: integer
+        shortcode:
+          type: string
+          description: Instagram post shortcode extracted from the URL
+        caption:
+          type: ["string", "null"]
+          description: Optional label shown in admin
+        displayOrder:
+          type: integer
+        createdAt:
+          type: string
+      required:
+        - id
+        - shortcode
+        - caption
+        - displayOrder
+        - createdAt
+    CreateInstagramPostBody:
+      type: object
+      properties:
+        shortcode:
+          type: string
+          description: Instagram post shortcode (from URL instagram.com/p/<shortcode>/)
+        caption:
+          type: ["string", "null"]
+        displayOrder:
+          type: integer
+      required:
+        - shortcode
+        - displayOrder
