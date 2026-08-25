@@ -20,8 +20,7 @@ export default defineConfig({
   root: path.resolve(import.meta.dirname),
   publicDir: path.resolve(import.meta.dirname, "static"),
   build: {
-    // Vercel is configured to serve this directory directly.
-    outDir: path.resolve(import.meta.dirname, "public"),
+    outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
   },
   server: {
