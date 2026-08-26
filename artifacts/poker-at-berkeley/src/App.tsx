@@ -253,7 +253,7 @@ function Home() {
             Berkeley Membership
           </LinkButton>
           <LinkButton
-            href="https://docs.google.com/forms/d/e/1FAIpQLScTCrcvLrthF6dSRRaRdqct25T3zqTy_DfrZQS6FDo-2QnEAg/viewform?usp=send_form"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSeMmF5-hdHQg8l-6DVjcQh7mwDMGapFE2DAfSMGnCTX9MgnAg/viewform?usp=publish-editor"
             variant="dark"
             index={4}
           >
