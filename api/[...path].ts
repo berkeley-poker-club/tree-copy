@@ -1,4 +1,10 @@
-import { Pool } from "pg";
+// Vercel compiles functions in an isolated TypeScript context that may not
+// include workspace Node typings. Keep the function self-contained.
+declare const require: (id: string) => any;
+declare const process: { env: Record<string, string | undefined> };
+declare const console: { error: (...args: any[]) => void };
+
+const { Pool } = require("pg");
 
 let pool: any;
 
@@ -51,7 +57,7 @@ export default async function handler(req: any, res: any) {
 
   if (req.method === "OPTIONS") return res.status(204).end();
 
-  const pathname = new URL(req.url ?? "/", "http://localhost").pathname;
+  const pathname = (req.url ?? "/").split("?", 1)[0];
   const db = database();
 
   try {
