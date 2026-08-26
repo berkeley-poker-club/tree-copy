@@ -246,7 +246,7 @@ function Home() {
         <div className="w-full flex flex-col gap-3">
           <SectionDivider label="Join Us" index={3} />
           <LinkButton
-            href="https://docs.google.com/forms/d/e/1FAIpQLSdfe6FXwMKNwB-2S40zqNhT1ZWJdHNZyIYNyesn_LtohNDKmw/viewform?usp=send_form"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdxzvFVWmAr78rsoMCtL-yaQafVlElf3plTJhg7cEHNfUlq8Q/viewform?usp=dialog"
             variant="dark"
             index={3}
           >
