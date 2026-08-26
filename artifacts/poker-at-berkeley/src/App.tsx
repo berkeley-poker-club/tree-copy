@@ -160,7 +160,10 @@ function Home() {
   });
 
   const todayStr = new Date().toISOString().split("T")[0];
-  const upcomingEvents = events?.filter((e) => e.eventDate >= todayStr) || [];
+  // API failures or proxy error payloads must not take down the public site.
+  const eventList = Array.isArray(events) ? events : [];
+  const instagramPostList = Array.isArray(instagramPosts) ? instagramPosts : [];
+  const upcomingEvents = eventList.filter((e) => e.eventDate >= todayStr);
 
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center justify-start py-16 px-4 overflow-hidden">
@@ -372,7 +375,7 @@ function Home() {
             label="On Instagram"
             index={15 + upcomingEvents.length}
           />
-          {instagramPosts && instagramPosts.length > 0 ? (
+          {instagramPostList.length > 0 ? (
             <>
               <motion.div
                 custom={16 + upcomingEvents.length}
@@ -386,7 +389,7 @@ function Home() {
                   className="flex gap-3 pb-2"
                   style={{ width: "max-content" }}
                 >
-                  {instagramPosts.map((post) => (
+                  {instagramPostList.map((post) => (
                     <div
                       key={post.id}
                       className="rounded-xl overflow-hidden border border-[#1e3a5f] shadow-lg flex-shrink-0"
