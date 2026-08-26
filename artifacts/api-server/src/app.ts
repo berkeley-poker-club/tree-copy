@@ -1,10 +1,13 @@
-import express, { type Application } from "express";
+import express from "express";
 import cors from "cors";
 import { pinoHttp } from "pino-http";
 import router from "./routes/index.js";
 import { logger } from "./lib/logger.js";
 
-const app: Application = express();
+// Vercel's isolated function typecheck may load Express's global augmentation
+// without the complete application interface. The runtime value is Express's
+// application object; leave it unannotated to preserve that behavior.
+const app: any = express();
 
 app.use(
   pinoHttp({
